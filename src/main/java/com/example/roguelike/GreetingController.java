@@ -14,8 +14,11 @@ public class GreetingController {
     @SendTo("/topic/greetings")
     public Greeting greeting(HelloMessage message) throws Exception {
         Thread.sleep(1000); // simulated delay
-        if(message.getName().startsWith("/")){
-            System.out.println("command called");
+        if (message.getName().startsWith("/dice")) {
+            int min = 0;
+            int max = 100;
+            int randomWithMathRandom = (int) ((Math.random() * (max - min)) + min);
+            return new Greeting(HtmlUtils.htmlEscape("dice result : " + randomWithMathRandom));
         }
         return new Greeting(HtmlUtils.htmlEscape(message.getName()));
     }
